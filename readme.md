@@ -1,5 +1,6 @@
 Capstone Project Proposal: FitBuddy
 
+render deployment link : `https://s63-vishwajeet-fitbuddy.onrender.com`
 
 Problem Statement
 Finding a compatible workout partner is challenging. Many fitness enthusiasts struggle to connect with like-minded individuals who share their workout routines, schedules, and fitness goals. Existing platforms such as social media and fitness forums lack an efficient way to match users based on their fitness preferences. There is a need for a platform that allows users to find suitable workout partners based on location, workout type, experience level, and availability.
