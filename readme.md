@@ -6,7 +6,7 @@ Problem Statement
 Finding a compatible workout partner is challenging. Many fitness enthusiasts struggle to connect with like-minded individuals who share their workout routines, schedules, and fitness goals. Existing platforms such as social media and fitness forums lack an efficient way to match users based on their fitness preferences. There is a need for a platform that allows users to find suitable workout partners based on location, workout type, experience level, and availability.
 
 
-Solution:
+Solution: 
 FitBuddy aims to provide an easy way for fitness enthusiasts to find and connect with workout partners. Unlike traditional social networking or fitness tracking apps, FitBuddy focuses on mutual matching based on workout preferences, availability, and location. Users can browse potential workout buddies, express interest, and connect with others who share similar fitness goals. The matchmaking feature is available but optional, ensuring flexibility in how users engage.
 
 Key Features-
