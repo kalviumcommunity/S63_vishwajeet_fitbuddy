@@ -12,6 +12,20 @@ router.get('/users', async (req, res) => {
   }
 });
 
+// POST a new user
+router.post('/users', async (req, res) => {
+  const { name, email, location, workoutType, experienceLevel, availability } = req.body;
+  const newUser = new User({ name, email, location, workoutType, experienceLevel, availability });
+
+  try {
+    await newUser.save();
+    res.status(201).json({ message: "User created successfully", user: newUser });
+  } catch (err) {
+    res.status(400).json({ message: "Error creating user", error: err.message });
+  }
+});
+
+
 // GET a single user by ID
 router.get('/users/:id', async (req, res) => {
   try {
