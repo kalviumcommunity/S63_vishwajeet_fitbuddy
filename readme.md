@@ -40,3 +40,7 @@ FitBuddy will provide a dedicated platform for fitness enthusiasts to find and c
 2. Core Development (Days 6-20)
 3. Testing & Refinements (Days 21-27)   
 
+
+netlify link - itsfitbuddy.netlify.app
+
+
