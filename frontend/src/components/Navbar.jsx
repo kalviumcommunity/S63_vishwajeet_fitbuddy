@@ -6,12 +6,10 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Core styling constants
   const primaryBg = 'bg-blue-500';
   const primaryHover = 'hover:bg-blue-600';
   
-  // Link and button styles
-  const navLinkStyle = ({ isActive }) => 
+ const navLinkStyle = ({ isActive }) => 
     `text-base font-medium px-3 py-2 ${isActive ? 'text-blue-500 font-semibold' : 'text-gray-700 hover:text-gray-900'}`;
   
   const mobileNavLinkStyle = ({ isActive }) =>
@@ -25,7 +23,6 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
     <header className="bg-gray-50 shadow-sm sticky top-0 z-50 w-full">
       <nav className="w-full">
         <div className="flex items-center justify-between h-14 px-10 mx-auto">
-          {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <span className={`p-2 ${primaryBg} rounded-md`}>
@@ -34,8 +31,6 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
               <span className="ml-2 text-xl font-bold text-gray-900">FitBuddy</span>
             </Link>
           </div>
-
-          {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="flex items-center space-x-10">
               <NavLink to="/" className={navLinkStyle} end>Home</NavLink>
@@ -43,9 +38,7 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
               <NavLink to="/profile" className={navLinkStyle}>My Profile</NavLink>
             </div>
           </div>
-
-          {/* Login/Logout Button */}
-          <div className="hidden md:block">
+                <div className="hidden md:block">
             {isLoggedIn ? (
               <button onClick={onLogout} className="text-base font-medium text-gray-600 hover:text-gray-900 px-3 py-2">
                 Logout
@@ -55,8 +48,7 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="-mr-2 flex md:hidden">
+         <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100"
@@ -71,9 +63,7 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
           </div>
         </div>
       </nav>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
+        {isMobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <NavLink to="/" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)} end>Home</NavLink>
@@ -106,4 +96,4 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
   );
 };
 
-export default Navbar;
+export default Navbar; 
