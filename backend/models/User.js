@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   workoutType: String,
   experienceLevel: String,
   availability: [String], // e.g., ['Morning', 'Evening']
+  profileImage: String, // URL or path to the profile image
 });
 
 module.exports = mongoose.model('User', userSchema);

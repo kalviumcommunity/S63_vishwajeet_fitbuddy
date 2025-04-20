@@ -44,7 +44,10 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
                 Logout
               </button>
             ) : (
-              <Link to="/login" className={loginBtnStyle}>Login</Link>
+              <div className="flex space-x-2">
+                <Link to="/register" className="px-5 py-2 rounded-md text-sm font-semibold text-blue-500 border border-blue-500 hover:bg-blue-50 focus:outline-none">Sign Up</Link>
+                <Link to="/login" className={loginBtnStyle}>Login</Link>
+              </div>
             )}
           </div>
 
@@ -80,13 +83,22 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
                   Logout
                 </button>
               ) : (
-                <Link
-                  to="/login"
-                  className={`block w-full text-left px-4 py-2 rounded-md text-base font-medium text-white ${primaryBg} ${primaryHover}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Login
-                </Link>
+                <div className="space-y-2">
+                  <Link
+                    to="/register"
+                    className="block w-full text-left px-4 py-2 rounded-md text-base font-medium text-blue-500 border border-blue-500 bg-white hover:bg-blue-50"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    to="/login"
+                    className={`block w-full text-left px-4 py-2 rounded-md text-base font-medium text-white ${primaryBg} ${primaryHover}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                </div>
               )}
             </div>
           </div>

@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Added Navigate for redirects
 
 import Navbar from './components/Navbar';
+import SignUpPage from './components/SignUpPage';
 
-// --- Placeholder Page Components (Replace with your actual imports) ---
+// --- Page Components ---
 const HomePage = () => <div className="p-4">Welcome to FitBuddy! (Public Home)</div>;
 const LoginPage = ({ onLogin }) => (
   <div className="p-4">
@@ -19,7 +20,7 @@ const LoginPage = ({ onLogin }) => (
     </button>
   </div>
 );
-const RegisterPage = () => <div className="p-4">Register Page - Build your form here!</div>;
+// RegisterPage is imported as SignUpPage from components
 const DiscoverPage = () => <div className="p-4">Discover Potential Matches Page (Protected)</div>;
 const MatchesPage = () => <div className="p-4">Your Matches Page (Protected)</div>;
 const ProfilePage = () => <div className="p-4">Your Profile Page (Protected)</div>;
@@ -86,8 +87,8 @@ function App() {
             />
             <Route
               path="/register"
-              element={isLoggedIn ? <Navigate to="/discover" replace /> : <RegisterPage />}
-               // If already logged in, redirect from /register to /discover
+              element={isLoggedIn ? <Navigate to="/discover" replace /> : <SignUpPage />}
+              // If already logged in, redirect from /register to /discover
             />
 
             {/* --- Protected Routes --- */}
