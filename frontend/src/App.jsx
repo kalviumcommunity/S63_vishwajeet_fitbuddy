@@ -5,21 +5,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import Navbar from './components/Navbar';
 import SignUpPage from './components/SignUpPage';
+import LoginPage from './components/LoginPage';
 
 // --- Page Components ---
 const HomePage = () => <div className="p-4">Welcome to FitBuddy! (Public Home)</div>;
-const LoginPage = ({ onLogin }) => (
-  <div className="p-4">
-    <h2>Login Page</h2>
-    {/* In a real component, you'd have a form here */}
-    <button
-      onClick={() => onLogin('fake-auth-token')} // Simulate login success
-      className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    >
-      Simulate Login
-    </button>
-  </div>
-);
 // RegisterPage is imported as SignUpPage from components
 const DiscoverPage = () => <div className="p-4">Discover Potential Matches Page (Protected)</div>;
 const MatchesPage = () => <div className="p-4">Your Matches Page (Protected)</div>;

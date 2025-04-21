@@ -7,6 +7,9 @@ const SignUpPage = () => {
   
   // Form state
   const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
     name: '',
     email: '',
     location: '',
@@ -101,6 +104,15 @@ const SignUpPage = () => {
   const validateForm = () => {
     const newErrors = {};
     
+    // Validate username and password fields
+    if (!formData.username.trim()) newErrors.username = 'Username is required';
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+    
+    if (!formData.confirmPassword) newErrors.confirmPassword = 'Please confirm your password';
+    else if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
+    
+    // Validate existing fields
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
@@ -131,42 +143,52 @@ const SignUpPage = () => {
     setSubmitError('');
     
     try {
-      // Create FormData to handle file upload
-      const submitData = new FormData();
+      // First step: Register user with authentication credentials
+      const registrationData = {
+        username: formData.username,
+        password: formData.password,
+        name: formData.name,
+        email: formData.email,
+        location: formData.location,
+        workoutType: formData.workoutType,
+        experienceLevel: formData.experienceLevel,
+        availability: formData.availability
+      };
       
-      // Add all form fields to FormData
-      Object.keys(formData).forEach(key => {
-        if (key === 'availability') {
-          // Convert array to JSON string for availability
-          submitData.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'profileImage') {
-          // Append file directly
-          if (formData[key]) {
-            submitData.append('profileImage', formData[key]);
-          }
-        } else {
-          submitData.append(key, formData[key]);
-        }
-      });
-      
-      // Submit to API and ensure data gets stored in MongoDB
-      const response = await fetch('http://localhost:5000/api/users', {
+      // Register user first to create account with auth credentials
+      const authResponse = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
-        body: submitData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData)
       });
       
-      // Handle response
-      let data;
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.indexOf('application/json') !== -1) {
-        data = await response.json();
+      const authData = await authResponse.json();
+      
+      if (!authResponse.ok) {
+        throw new Error(authData?.message || `Failed to create account: ${authResponse.status}`);
       }
       
-      if (!response.ok) {
-        throw new Error(data?.message || `Failed to create account: ${response.status}`);
+      // Second step: If user has a profile image, upload it
+      if (formData.profileImage) {
+        const imageData = new FormData();
+        imageData.append('profileImage', formData.profileImage);
+        
+        // Update user profile with image
+        // We'll need to modify the userRoutes to handle this separately
+        // For now, we'll use the existing route but only for the image
+        const imageResponse = await fetch(`http://localhost:5000/api/users/${authData.user._id}`, {
+          method: 'PUT',
+          body: imageData
+        });
+        
+        if (!imageResponse.ok) {
+          console.warn('Profile image upload failed, but account was created');
+        }
       }
       
-      console.log('User data successfully stored in MongoDB:', data);
+      console.log('User registered successfully:', authData);
       
       // Success - show success message and redirect after a delay
       setSubmitSuccess(true);
@@ -198,6 +220,69 @@ const SignUpPage = () => {
       )}
       
       <form onSubmit={handleSubmit}>
+        {/* Username Field */}
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              errors.username ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="Choose a username"
+          />
+          {errors.username && (
+            <p className="mt-1 text-sm text-red-500">{errors.username}</p>
+          )}
+        </div>
+        
+        {/* Password Field */}
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              errors.password ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="Enter your password"
+          />
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+          )}
+        </div>
+        
+        {/* Confirm Password Field */}
+        <div className="mb-4">
+          <label htmlFor="confirmPassword" className="block text-gray-700 font-medium mb-2">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="Confirm your password"
+          />
+          {errors.confirmPassword && (
+            <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>
+          )}
+        </div>
+        
         {/* Profile Image Upload */}
         <div className="mb-6">
           <label className="block text-gray-700 font-medium mb-2 text-center">
