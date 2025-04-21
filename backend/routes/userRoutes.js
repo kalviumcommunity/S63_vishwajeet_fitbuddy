@@ -38,7 +38,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
-});
+}); 
 
 // GET all users
 router.get('/users', async (req, res) => {
@@ -50,8 +50,8 @@ router.get('/users', async (req, res) => {
   }
 });
 
-// POST a new user with profile image upload
-router.post('/users', upload.single('profileImage'), async (req, res) => {
+ // POST a new user with profile image upload
+ router.post('/users', upload.single('profileImage'), async (req, res) => {
   try {
     // Parse availability if it's a JSON string
     let availability = req.body.availability;
@@ -87,7 +87,9 @@ router.post('/users', upload.single('profileImage'), async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: "Error creating user", error: err.message });
   }
-});
+}); 
+
+
 
 // GET a single user by ID
 router.get('/users/:id', async (req, res) => {
