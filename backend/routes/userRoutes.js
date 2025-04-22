@@ -103,11 +103,19 @@ router.get('/users/:id', async (req, res) => {
 });
 
 // PUT: Update a user by ID
-router.put('/users/:id', async (req, res) => {
+router.put('/users/:id', upload.single('profileImage'), async (req, res) => {
   try {
+    // Check if we have a file upload
+    const updateData = { ...req.body };
+    
+    // If profile image was uploaded, add its path to the update data
+    if (req.file) {
+      updateData.profileImage = `/uploads/profiles/${req.file.filename}`;
+    }
+    
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true, runValidators: true }
     );
 
@@ -115,7 +123,11 @@ router.put('/users/:id', async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "User updated successfully", user: updatedUser });
+    // Return the updated user without the password field
+    const userWithoutPassword = { ...updatedUser.toObject() };
+    if (userWithoutPassword.password) delete userWithoutPassword.password;
+
+    res.status(200).json({ message: "User updated successfully", user: userWithoutPassword });
   } catch (err) {
     res.status(500).json({ message: "Error updating user", error: err.message });
   }
