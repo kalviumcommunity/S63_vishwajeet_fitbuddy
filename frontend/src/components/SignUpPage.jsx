@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -156,7 +157,7 @@ const SignUpPage = () => {
       };
       
       // Register user first to create account with auth credentials
-      const authResponse = await fetch('http://localhost:5000/api/auth/register', {
+      const authResponse = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +179,7 @@ const SignUpPage = () => {
         // Update user profile with image
         // We'll need to modify the userRoutes to handle this separately
         // For now, we'll use the existing route but only for the image
-        const imageResponse = await fetch(`http://localhost:5000/api/users/${authData.user._id}`, {
+        const imageResponse = await fetch(`${API_BASE_URL}/api/users/${authData.user._id}`, {
           method: 'PUT',
           body: imageData
         });

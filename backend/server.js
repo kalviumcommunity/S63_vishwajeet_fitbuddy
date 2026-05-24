@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const { router: authRoutes } = require("./routes/authRoutes");
+const matchRoutes = require("./routes/matchRoutes");
 const path = require("path");
 const cors = require("cors"); // For handling cross-origin requests
 
@@ -27,6 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 app.use("/api", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api", matchRoutes);
 
 // Root route
 app.get('/', (req, res) => {

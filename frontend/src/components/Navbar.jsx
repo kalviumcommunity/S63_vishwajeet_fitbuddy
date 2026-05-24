@@ -34,8 +34,13 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
           <div className="hidden md:block">
             <div className="flex items-center space-x-10">
               <NavLink to="/" className={navLinkStyle} end>Home</NavLink>
-              <NavLink to="/matches" className={navLinkStyle}>Matches</NavLink>
-              <NavLink to="/profile" className={navLinkStyle}>My Profile</NavLink>
+              {isLoggedIn && (
+                <>
+                  <NavLink to="/discover" className={navLinkStyle}>Discover</NavLink>
+                  <NavLink to="/matches" className={navLinkStyle}>Matches</NavLink>
+                  <NavLink to="/profile" className={navLinkStyle}>My Profile</NavLink>
+                </>
+              )}
             </div>
           </div>
                 <div className="hidden md:block">
@@ -70,8 +75,13 @@ const Navbar = ({ isLoggedIn = false, onLogout = () => {} }) => {
         <div className="md:hidden border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <NavLink to="/" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)} end>Home</NavLink>
-            <NavLink to="/matches" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)}>Matches</NavLink>
-            <NavLink to="/profile" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)}>My Profile</NavLink>
+            {isLoggedIn && (
+              <>
+                <NavLink to="/discover" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)}>Discover</NavLink>
+                <NavLink to="/matches" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)}>Matches</NavLink>
+                <NavLink to="/profile" className={mobileNavLinkStyle} onClick={() => setIsMobileMenuOpen(false)}>My Profile</NavLink>
+              </>
+            )}
           </div>
           <div className="pt-4 pb-3 border-t border-gray-300">
             <div className="px-2 space-y-2">

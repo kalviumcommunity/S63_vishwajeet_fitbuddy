@@ -6,15 +6,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Navbar from './components/Navbar';
 import SignUpPage from './components/SignUpPage';
 import LoginPage from './components/LoginPage';
+import HomePage from './components/HomePage';
+import DiscoverPage from './components/DiscoverPage';
+import MatchesPage from './components/MatchesPage';
+import ProfilePage from './components/ProfilePage';
 
-// --- Page Components ---
-const HomePage = () => <div className="p-4">Welcome to FitBuddy! (Public Home)</div>;
-// RegisterPage is imported as SignUpPage from components
-const DiscoverPage = () => <div className="p-4">Discover Potential Matches Page (Protected)</div>;
-const MatchesPage = () => <div className="p-4">Your Matches Page (Protected)</div>;
-const ProfilePage = () => <div className="p-4">Your Profile Page (Protected)</div>;
-const NotFoundPage = () => <div className="p-4 text-center text-red-500">404 - Page Not Found</div>;
-// --- End Placeholder Page Components ---
+const NotFoundPage = () => <div className="p-4 text-center text-red-500 font-bold">404 - Page Not Found</div>;
 
 
 function App() {
@@ -64,28 +61,23 @@ function App() {
         <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
         {/* Main content area - Add padding top matching navbar height */}
-        {/* Adjust pt-16 if your navbar height is different */}
         <main className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
           <Routes>
             {/* --- Public Routes --- */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
             <Route
               path="/login"
               element={isLoggedIn ? <Navigate to="/discover" replace /> : <LoginPage onLogin={handleLogin} />}
-              // If already logged in, redirect from /login to /discover
             />
             <Route
               path="/register"
               element={isLoggedIn ? <Navigate to="/discover" replace /> : <SignUpPage />}
-              // If already logged in, redirect from /register to /discover
             />
 
             {/* --- Protected Routes --- */}
-            {/* These routes require the user to be logged in */}
             <Route
               path="/discover"
               element={isLoggedIn ? <DiscoverPage /> : <Navigate to="/login" replace />}
-              // If not logged in, redirect to /login
             />
             <Route
               path="/matches"
